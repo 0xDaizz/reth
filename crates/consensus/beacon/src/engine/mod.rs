@@ -564,7 +564,7 @@ where
                         // FCU resulted in a fatal error from which we can't recover
                         let err = err.clone();
                         let _ = tx.send(Err(error));
-                        return OnForkchoiceUpdateOutcome::Fatal(err.clone())
+                        return OnForkchoiceUpdateOutcome::Fatal(err)
                     }
                 }
                 let _ = tx.send(Err(error));
@@ -1888,9 +1888,7 @@ mod tests {
         BeaconForkChoiceUpdateError,
     };
     use assert_matches::assert_matches;
-    use reth_primitives::{
-        stage::StageCheckpoint, ChainSpec, ChainSpecBuilder, PruneModes, H256, MAINNET,
-    };
+    use reth_primitives::{stage::StageCheckpoint, ChainSpec, ChainSpecBuilder, H256, MAINNET};
     use reth_provider::{BlockWriter, ProviderFactory};
     use reth_rpc_types::engine::{
         ExecutionPayloadV1, ForkchoiceState, ForkchoiceUpdated, PayloadStatus,
